@@ -2,19 +2,20 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import json
 import time
-import login
+import navigate
 
 base_url = "https://www.instagram.com/"
 login_url = "accounts/login/"
 option = webdriver.ChromeOptions()
-option.add_argument("--incognito")
+#option.add_argument("--incognito")
+users={}
 
 driver = webdriver.Chrome("./chromedriver/chromedriver.exe", chrome_options=option)
 #driver.get("https://www.instagram.com/p/CWeGL2NPaNz/")
 #driver.maximize_window()
 #time.sleep(10)
 
-login.login(driver,base_url+login_url)
+navigate.login(driver,base_url+login_url)
 #driver.close()
 '''
 body = driver.execute_script("return document.body")

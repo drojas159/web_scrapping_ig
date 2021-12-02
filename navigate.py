@@ -5,12 +5,9 @@ from bs4 import BeautifulSoup
 import save_users as su
 
 counter = 0
+users ={}
 
 def login(driver,url):
-    
-    print(url)
-    
-    print(driver.title)
     try :
         driver.get(url)
         wait = WebDriverWait(driver,60).until(EC.url_changes(url))
@@ -25,20 +22,21 @@ def login(driver,url):
 
 def scrape_page(driver):
     global counter
+    global users
     counter += 1
     body = driver.execute_script("return document.body")
     source = body.get_attribute('innerHTML') 
     soup = BeautifulSoup(source, "html.parser")
-    get_html(str(soup.find_all('img')),driver.title+str(counter))
-    su.save_users(soup.find_all('img'))
+    get_content(str(soup.find_all('img')),driver.title+str(counter))
+    users=su.save_users(soup.find_all('img'),users)
     
     
 
-def get_html (content,file ):
+def get_content (content,file ):
     file = open("./scrappingFiles/"+file+".txt","w", encoding='utf-8') 
     file.write(content)
     file.close()
 
 def navigate (driver):
-    print ("hola")
+    print(users)
     ##driver.close()
