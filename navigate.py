@@ -27,13 +27,13 @@ def scrape_page(driver):
     body = driver.execute_script("return document.body")
     source = body.get_attribute('innerHTML') 
     soup = BeautifulSoup(source, "html.parser")
-    get_content(str(soup.find_all('img')),driver.title+str(counter))
+    get_content(str(soup),driver.title+str(counter))
     users=su.save_users(soup.find_all('img'),users)
     
     
 
 def get_content (content,file ):
-    file = open("./scrappingFiles/"+file+".txt","w", encoding='utf-8') 
+    file = open("./scrappingFiles/"+file+".html","w", encoding='utf-8') 
     file.write(content)
     file.close()
 
