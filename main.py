@@ -1,13 +1,17 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
-import json
 import time
 import navigate
+import sys
+sys.path.append('c:\\workarea\\web_scrapping_ig\\model')
+sys.path.append('c:\\workarea\\web_scrapping_ig\\persistence')
+
+print(sys.path)
 
 base_url = "https://www.instagram.com/"
 login_url = "accounts/login/"
 option = webdriver.ChromeOptions()
-#option.add_argument("--incognito")
+option.add_argument("--incognito")
 users={}
 
 driver = webdriver.Chrome("./chromedriver/chromedriver.exe", chrome_options=option)
