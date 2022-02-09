@@ -3,15 +3,17 @@ from connection import connection
 
 def insert_user(user):
     
-    sql = """INSERT INTO users(user_name,profile_url) VALUES(%s,%s)"""
+    sql = """INSERT INTO users(user_name,profile_url) VALUES(%s,%s) returning user_id"""
     conn = None
     try:
         conn = connection()
         cur = conn.cursor()
         url= "https://www.instagram.com/"
         cur.execute(sql, (user.user_name.upper() ,url+user.user_name,))
+        user_id = cur.fetchone()
         conn.commit()
         cur.close()
+        return user_id[0]
     except (Exception) as error:
         print(error)
     finally:
@@ -41,3 +43,12 @@ def get_all_users():
     conn.close()
     return users
 
+def get_user(user):
+    conn = connection()
+    cur = conn.cursor()
+    sql = """select user_id from public.users where user_name=%s"""
+    cur.execute(sql,(user.user_name.upper() ,))
+    user_id = cur.fetchone()
+    cur.close()
+    conn.close()
+    return user_id[0]

@@ -5,7 +5,6 @@ class Relation_follow:
     user_id_followed = 0
     type_relation = 0
 
-    def __init__(self,  user_id_following, user_id_followed, type_relation):
+    def __init__(self,  user_id_following, user_id_followed):
         self.user_id_following = user_id_following
         self.user_id_followed = user_id_followed
-        self.type_relation = type_relation

@@ -1,17 +1,18 @@
 from user import User
 from publications import Publication
-from usuarioDAO import insert_user, user_exists, get_all_users
+from usuarioDAO import insert_user, user_exists, get_all_users, get_user
 from publicationDAO import insert_publication, get_all_publications
+from relation_follow import Relation_follow
+import relationDAO
 import json
 
-def save_users(images):
-    for i in images:
-        if (i.has_attr( "alt" ) and i['alt'].find("Foto del perfil de")!=-1):
-            username = i['alt'].replace("Foto del perfil de ","")
-            usr = User(username)
-            if (user_exists(usr)==False):
-                insert_user(usr)
-
+def save_or_get_user(user):
+    usr = User(user)
+    if (user_exists(usr)==False):
+        user_id=insert_user(usr)
+    else:
+        user_id=get_user(usr)
+    return user_id
 
 def get_users():
     users_list=[]
@@ -60,4 +61,9 @@ def get_publications():
     print(publications_list)
     return publications_list
 
+def save_relation(user_id_following,user_id_followed):
+    rel = Relation_follow(user_id_following,user_id_followed)
+    if (relationDAO.relation_exists(rel)==False):
+        relationDAO.insert_relation(rel)
+        
 
